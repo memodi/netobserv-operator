@@ -5,6 +5,7 @@ import (
 	"fmt"
 	filePath "path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"time"
 
@@ -22,6 +23,14 @@ const (
 	netobservNS   = "openshift-netobserv-operator"
 	NOPackageName = "netobserv-operator"
 )
+
+// testDataDir returns the absolute path to the testdata directory.
+// It uses runtime.Caller to resolve relative to this source file,
+// so it works regardless of the working directory.
+func testDataDir() string {
+	_, thisFile, _, _ := runtime.Caller(0)
+	return filePath.Join(filePath.Dir(thisFile), "testdata")
+}
 
 // SubscriptionObjects objects are used to create operators via OLM
 type SubscriptionObjects struct {
