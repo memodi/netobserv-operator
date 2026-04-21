@@ -566,3 +566,4 @@ include .mk/development.mk
 include .mk/local.mk
 include .mk/ocp.mk
 include .mk/shortcuts.mk
+include .mk/integrationtests.mk
