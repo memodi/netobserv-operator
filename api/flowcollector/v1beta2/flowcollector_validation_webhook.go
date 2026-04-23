@@ -260,6 +260,7 @@ func (v *validator) validateFLP() {
 	v.validateFLPFilters()
 	v.validateFLPAlerts()
 	v.validateFLPMetricsForAlerts()
+	v.validateFLPMetricsIncludeLists()
 	v.validateFLPTLS()
 }
 
@@ -432,6 +433,15 @@ func (v *validator) validateFLPMetricsForAlerts() {
 				}
 			}
 		}
+	}
+}
+
+func (v *validator) validateFLPMetricsIncludeLists() {
+	if v.fc.Processor.Metrics.IncludeList != nil && v.fc.Processor.Metrics.AdditionalIncludeList != nil {
+		v.warnings = append(
+			v.warnings,
+			MetricsIncludeListWarning,
+		)
 	}
 }
 
