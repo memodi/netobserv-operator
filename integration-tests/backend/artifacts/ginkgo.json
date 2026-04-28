@@ -1,0 +1,47 @@
+[
+  {
+    "SuitePath": "/home/osmakal/Repos/network-observability-operator/integration-tests/backend",
+    "SuiteDescription": "",
+    "SuiteLabels": null,
+    "SuiteSucceeded": false,
+    "SuiteHasProgrammaticFocus": false,
+    "SpecialSuiteFailureReasons": [
+      "Failed to compile backend:\n\n# github.com/network-observability-operator/integration-tests/backend\npackage github.com/network-observability-operator/integration-tests/backend\n\tnetobserv_reporter_integration.go:9:2: use of internal package github.com/onsi/ginkgo/v2/internal not allowed\nFAIL\tgithub.com/network-observability-operator/integration-tests/backend [setup failed]\nFAIL\n"
+    ],
+    "PreRunStats": {
+      "TotalSpecs": 0,
+      "SpecsThatWillRun": 0
+    },
+    "StartTime": "0001-01-01T00:00:00Z",
+    "EndTime": "0001-01-01T00:00:00Z",
+    "RunTime": 0,
+    "SuiteConfig": {
+      "RandomSeed": 1776100868,
+      "RandomizeAllSpecs": false,
+      "FocusStrings": [
+        "Kafka"
+      ],
+      "SkipStrings": null,
+      "FocusFiles": null,
+      "SkipFiles": null,
+      "LabelFilter": "",
+      "FailOnPending": false,
+      "FailOnEmpty": false,
+      "FailFast": false,
+      "FlakeAttempts": 0,
+      "MustPassRepeatedly": 0,
+      "DryRun": true,
+      "PollProgressAfter": 0,
+      "PollProgressInterval": 0,
+      "Timeout": 3600000000000,
+      "EmitSpecProgress": false,
+      "OutputInterceptorMode": "",
+      "SourceRoots": null,
+      "GracePeriod": 30000000000,
+      "ParallelProcess": 1,
+      "ParallelTotal": 1,
+      "ParallelHost": ""
+    },
+    "SpecReports": null
+  }
+]

@@ -1,0 +1,32 @@
+/home/osmakal/Repos/network-observability-operator/integration-tests/backend/testdata
+/home/osmakal/Repos/network-observability-operator/integration-tests/backend/testdata/networking
+/home/osmakal/Repos/network-observability-operator/integration-tests/backend/testdata/subscription
+/home/osmakal/Repos/network-observability-operator/integration-tests/backend/testdata/flowcollector_v1beta2_template.yaml
+[1776167632] Backend Suite - 1/7488 specs 
+--------------------REPORT_BEFORE_SUITE_START--------------------
+Running Suite: Backend Suite - /home/osmakal/Repos/network-observability-operator/integration-tests/backend
+==========================================================================================================
+Random Seed: 1776167632
+
+Will run 1 specs
+
+--------------------REPORT_BEFORE_SUITE_END--------------------
+--------------------REPORT_AFTER_EACH_START--------------------
+[sig-netobserv] Network_Observability Author:aramesha-Critical-86388-Verify flowCollectorSlice collectionMode: AllowList [Serial]
+/home/osmakal/Repos/network-observability-operator/integration-tests/backend/test_flowcollectorslice.go:312
+• PASSED [870.765 seconds]
+--------------------REPORT_AFTER_EACH_END--------------------
+•
+--------------------REPORT_AFTER_SUITE_START--------------------
+------------------------------
+
+Backend Suite - 1/1 specs • SUCCESS! [870.918 seconds]
+
+Ran 1 tests
+Passed: 1, Failed: 0, Skipped: 0
+
+--------------------REPORT_AFTER_SUITE_END--------------------
+ SUCCESS! 14m30.917662585s PASS
+
+Ginkgo ran 1 suite in 14m42.471410633s
+Test Suite Passed
