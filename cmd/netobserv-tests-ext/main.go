@@ -5,14 +5,17 @@ import (
 	"fmt"
 	"os"
 
+	// Import test packages to register Ginkgo tests via init() functions
+	_ "github.com/netobserv/netobserv-operator/integration-tests/backend"
+
 	"github.com/openshift-eng/openshift-tests-extension/pkg/cmd"
 	oteextension "github.com/openshift-eng/openshift-tests-extension/pkg/extension"
 	oteginkgo "github.com/openshift-eng/openshift-tests-extension/pkg/ginkgo"
 	exutil "github.com/openshift/origin/test/extended/util"
 	"github.com/spf13/cobra"
 	"k8s.io/component-base/cli"
-	e2eframework "k8s.io/kubernetes/test/e2e/framework"
 	"k8s.io/klog/v2"
+	e2eframework "k8s.io/kubernetes/test/e2e/framework"
 )
 
 func main() {
