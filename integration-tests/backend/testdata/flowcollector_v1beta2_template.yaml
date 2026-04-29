@@ -34,6 +34,26 @@ objects:
       processor:
         multiClusterDeployment: "${{MultiClusterDeployment}}"
         addZone: "${{AddZone}}"
+        service:
+          providedCertificates:
+            caFile:
+              file: ca.crt
+              name: "${ServiceCASecretName}"
+              namespace: "${Namespace}"
+              type: secret
+            serverCert:
+              certFile: tls.crt
+              certKey: tls.key
+              name: "${ServiceServerCertSecretName}"
+              namespace: "${Namespace}"
+              type: secret
+            clientCert:
+              certFile: tls.crt
+              certKey: tls.key
+              name: "${ServiceClientCertSecretName}"
+              namespace: "${Namespace}"
+              type: secret
+          tlsType: "${ServiceTLSType}"
         metrics:
           server:
             tls:
@@ -197,3 +217,15 @@ parameters:
     value: '[]'
   - name: SecondaryNetworks
     value: '[]'
+  - name: ServiceTLSType
+    description: "TLS type for Service deployment model (Auto, Provided, Disabled, Auto-mTLS)"
+    value: "Auto"
+  - name: ServiceCASecretName
+    description: "CA certificate secret name for Service mode with Provided certificates"
+    value: "prov-netobserv-ca-secret"
+  - name: ServiceServerCertSecretName
+    description: "Server certificate secret name for Service mode with Provided certificates"
+    value: "prov-flowlogs-pipeline-cert"
+  - name: ServiceClientCertSecretName
+    description: "Client certificate secret name for Service mode with Provided certificates"
+    value: "prov-ebpf-agent-cert"

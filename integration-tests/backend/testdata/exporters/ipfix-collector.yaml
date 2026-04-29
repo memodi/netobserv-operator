@@ -1,71 +1,52 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flowlogs-pipeline
+  name: ipfix-collector
   labels:
-    app: flowlogs-pipeline
+    app: ipfix-collector
   namespace: ipfix
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flowlogs-pipeline
+      app: ipfix-collector
   template:
     metadata:
       labels:
-        app: flowlogs-pipeline
+        app: ipfix-collector
     spec:
       containers:
-        - name: flowlogs-pipeline
-          image: quay.io/netobserv/flowlogs-pipeline:main
+        - name: ipfix-collector
+          image: antrea/ipfix-collector:latest
           args:
-          - "--config=/etc/flowlogs-pipeline/config.yaml"
+          - "--ipfix.addr=0.0.0.0"
+          - "--ipfix.port=2055"
+          - "--ipfix.transport=tcp"
           ports:
             - containerPort: 2055
+              protocol: TCP
+              name: ipfix
+            - containerPort: 8080
+              protocol: TCP
+              name: http
           imagePullPolicy: IfNotPresent
-          volumeMounts:
-            - name: configuration
-              mountPath: "/etc/flowlogs-pipeline/"
-      volumes:
-        - name: configuration
-          configMap:
-            name: flp-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: flowlogs-pipeline
+  name: ipfix-collector
   labels:
-    app: flowlogs-pipeline
+    app: ipfix-collector
   namespace: ipfix
 spec:
   ports:
     - port: 2055
       targetPort: 2055
-      protocol: UDP
+      protocol: TCP
       name: ipfix
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
   selector:
-    app: flowlogs-pipeline
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: flp-config
-  namespace: ipfix
-data:
-  config.yaml: |
-    log-level: info
-    pipeline:
-      - name: ingest
-      - name: write
-        follows: ingest
-    parameters:
-      - name: ingest
-        ingest:
-          type: collector
-          collector:
-            hostName: 0.0.0.0
-            port: 2055
-      - name: write
-        write:
-          type: stdout
+    app: ipfix-collector

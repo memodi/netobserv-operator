@@ -109,6 +109,8 @@ objects:
     host: ${MINIO_DOMAIN}
     port:
       targetPort: 9000
+    tls:
+      termination: edge
     to:
       kind: Service
       name: ${NAME}
