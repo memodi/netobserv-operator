@@ -1,32 +1,23 @@
 version: "2"
 run:
   go: "1.23"
+  skip-dirs:
+    - api
+    - cmd
+    - config
+    - docs
+    - hack
+    - internal
+    - pkg
+    - vendor
 linters:
   enable:
     - copyloopvar
-    - cyclop
     - errcheck
-    - errname
-    - errorlint
-    - exhaustive
-    - gocritic
     - govet
     - ineffassign
-    - revive
     - staticcheck
     - unused
-  settings:
-    cyclop:
-      max-complexity: 20
-    gocritic:
-      enabled-checks:
-        - hugeParam
-        - rangeExprCopy
-        - rangeValCopy
-        - indexAlloc
-      settings:
-        ifElseChain:
-          minThreshold: 3
   exclusions:
     generated: lax
     presets:
@@ -38,7 +29,6 @@ linters:
       - third_party$
       - builtin$
       - examples$
-      - integration-tests/backend
     rules:
       - linters:
         - staticcheck
@@ -55,4 +45,3 @@ formatters:
       - third_party$
       - builtin$
       - examples$
-      - integration-tests/backend

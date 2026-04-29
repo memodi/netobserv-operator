@@ -469,6 +469,26 @@ func WaitForPodsReadyWithLabel(oc *exutil.CLI, ns, label string) {
 	compat_otp.AssertWaitPollNoErr(err, fmt.Sprintf("The pod with label %s is not availabile", label))
 }
 
+// waitForConfigMapDataInjection waits for a configmap to have its data field populated
+// This is useful for waiting on service-ca configmap injection or other dynamic configmap updates
+func waitForConfigMapDataInjection(oc *exutil.CLI, namespace, configMapName, dataKey string) {
+	err := wait.PollUntilContextTimeout(context.Background(), 5*time.Second, 180*time.Second, false, func(context.Context) (bool, error) {
+		// Check if .data field is populated (returns {} when empty, populated JSON when injected)
+		dataValue, getErr := oc.AsAdmin().WithoutNamespace().Run("get").Args("configmap", configMapName, "-n", namespace, "-o=jsonpath={.data}").Output()
+		if getErr != nil {
+			e2e.Logf("ConfigMap %s/%s not found yet, will retry: %v", namespace, configMapName, getErr)
+			return false, nil
+		}
+		// Check if data is populated (more than just empty braces "{}")
+		if len(dataValue) > 2 {
+			e2e.Logf("ConfigMap %s/%s has been populated with data", namespace, configMapName)
+			return true, nil
+		}
+		e2e.Logf("ConfigMap %s/%s exists but data not populated yet, will retry", namespace, configMapName)
+		return false, nil
+	})
+	compat_otp.AssertWaitPollNoErr(err, fmt.Sprintf("ConfigMap %s/%s data was not populated within timeout", namespace, configMapName))
+}
 // WaitForDeploymentPodsToBeReady waits for the specific deployment to be ready
 func waitForDeploymentPodsToBeReady(oc *exutil.CLI, namespace, name string) error {
 	err := wait.PollUntilContextTimeout(context.Background(), 5*time.Second, 180*time.Second, false, func(context.Context) (done bool, err error) {
