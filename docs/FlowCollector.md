@@ -2163,10 +2163,9 @@ If the key is empty, operator must be Exists; this combination means to match al
         <td>string</td>
         <td>
           Operator represents a key's relationship to the value.
-Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal.
+Valid operators are Exists and Equal. Defaults to Equal.
 Exists is equivalent to wildcard for value, so that a pod can
-tolerate all taints of a particular category.
-Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).<br/>
+tolerate all taints of a particular category.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -4895,10 +4894,9 @@ If the key is empty, operator must be Exists; this combination means to match al
         <td>string</td>
         <td>
           Operator represents a key's relationship to the value.
-Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal.
+Valid operators are Exists and Equal. Defaults to Equal.
 Exists is equivalent to wildcard for value, so that a pod can
-tolerate all taints of a particular category.
-Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).<br/>
+tolerate all taints of a particular category.<br/>
         </td>
         <td>false</td>
       </tr><tr>
@@ -10521,10 +10519,9 @@ If the key is empty, operator must be Exists; this combination means to match al
         <td>string</td>
         <td>
           Operator represents a key's relationship to the value.
-Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal.
+Valid operators are Exists and Equal. Defaults to Equal.
 Exists is equivalent to wildcard for value, so that a pod can
-tolerate all taints of a particular category.
-Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).<br/>
+tolerate all taints of a particular category.<br/>
         </td>
         <td>false</td>
       </tr><tr>
