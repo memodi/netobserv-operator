@@ -104,9 +104,6 @@ var _ = g.ReportAfterEach(func(report g.SpecReport) {
 			fmt.Printf("%s\n", report.Failure.Location.String())
 		}
 	}
-
-	//   t,
-	// types.SpecStateInvalid, types.SpecStatePending, types.SpecStateFailed, types.SpecStateAborted, types.SpecStatePanicked, types.SpecStateInterrupted, types.SpecStateTimedout
 })
 
 var _ = g.ReportAfterSuite("NetObserv Summary", func(report g.Report) {
