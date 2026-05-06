@@ -159,6 +159,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:memodi-High-74977-Verify OTEL exporter with TLS [Serial]", func() {
+		SkipIfOCPBelow("v4.13")
 		// don't delete the OTEL Operator at the end of the test
 		g.By("Subscribe to OTEL Operator")
 		OtelNS.DeployOperatorNamespace(oc)
