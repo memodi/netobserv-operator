@@ -13,13 +13,14 @@ import (
 var clusterVersion string
 
 func GetOCPVersion(oc *exutil.CLI) (string, error) {
-	if clusterVersion == "" {
+	if clusterVersion != "" {
 		return clusterVersion, nil
 	}
 
 	var err error
-	_, clusterVersion, err = compat_otp.GetClusterVersion(oc)
-	clusterVersion = semver.Canonical(clusterVersion)
+	_ , clusterVersion, err = compat_otp.GetClusterVersion(oc)
+	clusterVersion = semver.Canonical("v"+clusterVersion)
+	fmt.Printf("Detected OCP version: %s\n", clusterVersion)
 	return clusterVersion, err
 }
 

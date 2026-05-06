@@ -29,7 +29,7 @@ var _ = g.BeforeSuite(func() {
 
 	oc := exutil.NewCLIForMonitorTest("netobserv")
 	var err error
-	clusterVersion, err = GetOCPVersion(oc)
+	_, err = GetOCPVersion(oc)
 	gomega.Expect(err).NotTo(gomega.HaveOccurred())
 })
 
@@ -70,7 +70,6 @@ var _ = g.ReportBeforeSuite(func(report g.Report) {
 	fmt.Printf("==========================================================================================================\n")
 	fmt.Printf("Random Seed: %d\n\n", report.SuiteConfig.RandomSeed)
 	fmt.Printf("Will run %d specs\n", report.PreRunStats.SpecsThatWillRun)
-	fmt.Printf("Running tests against OCP %s\n", clusterVersion)
 })
 
 var _ = g.ReportAfterEach(func(report g.SpecReport) {
