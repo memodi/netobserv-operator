@@ -87,7 +87,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:memodi-NonPreRelease-Longduration-Medium-60664-Medium-61482-Alerts-with-NetObserv [Serial][Slow]", func() {
-		SkipIfOCPBelow(4, 10)
+		SkipIfOCPBelow("4.10")
 		flpAlertRuleName := "flowlogs-pipeline-alert"
 		ebpfAlertRuleName := "ebpf-agent-prom-alert"
 
@@ -161,7 +161,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:memodi-Medium-63185-Verify NetOberv must-gather plugin [Serial]", func() {
-		SkipIfOCPBelow(4, 10)
+		SkipIfOCPBelow("4.10")
 		mustgatherDir := "/tmp/must-gather-63185"
 		mustgatherImage := "quay.io/netobserv/must-gather"
 
@@ -248,7 +248,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:aramesha-NonPreRelease-Medium-72875-Verify nodeSelector and tolerations with netobserv components [Serial]", func() {
-		SkipIfOCPBelow(4, 12)
+		SkipIfOCPBelow("4.12")
 
 		// verify tolerations
 		g.By("Get worker node of the cluster")
@@ -449,7 +449,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		g.Context("FLP, eBPF and Console metrics:", func() {
 			g.When("processor.metrics.TLS == Disabled and agent.ebpf.metrics.TLS == Disabled", func() {
 				g.It("Author:aramesha-Critical-50504-Critical-72959-Verify flowlogs-pipeline and eBPF metrics and health [Serial]", func() {
-					SkipIfOCPBelow(4, 12)
+					SkipIfOCPBelow("4.12")
 					var (
 						flpPromSM  = "flowlogs-pipeline-monitor"
 						namespace  = oc.Namespace()
@@ -516,7 +516,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 
 			g.When("processor.metrics.TLS == Auto and ebpf.agent.metrics.TLS == Auto", func() {
 				g.It("Author:aramesha-Critical-54043-Critical-66031-Critical-72959-Verify flowlogs-pipeline, eBPF and Console metrics [Serial]", func() {
-					SkipIfOCPBelow(4, 12)
+					SkipIfOCPBelow("4.12")
 					var (
 						flpPromSM  = "flowlogs-pipeline-monitor"
 						flpPromSA  = "flowlogs-pipeline-prom"
@@ -576,7 +576,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:memodi-High-53595-High-49107-High-45304-High-54929-High-54840-High-68310-Verify flow correctness and metrics [Serial]", func() {
-			SkipIfOCPBelow(4, 11)
+			SkipIfOCPBelow("4.11")
 			g.By("Deploying test server and client pods")
 			serverTemplatePath := filePath.Join(baseDir, "test-nginx-server_template.yaml")
 			testServer := TestServerTemplate{
@@ -641,7 +641,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-Longduration-High-60701-Verify connection tracking [Serial]", func() {
-			SkipIfOCPBelow(4, 10)
+			SkipIfOCPBelow("4.10")
 			startTime := time.Now()
 
 			g.By("Deploying test server and client pods")
@@ -732,7 +732,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:memodi-NonPreRelease-Longduration-High-63839-Verify-multi-tenancy [Disruptive][Slow]", func() {
-			SkipIfOCPBelow(4, 15)
+			SkipIfOCPBelow("4.15")
 			users, usersHTpassFile, htPassSecret := getNewUser(oc, 2)
 			defer userCleanup(oc, users, usersHTpassFile, htPassSecret)
 
@@ -851,7 +851,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-Critical-59746-NetObserv upgrade testing [Serial]", func() {
-			SkipIfOCPBelow(4, 10)
+			SkipIfOCPBelow("4.10")
 			g.By("Uninstall operator deployed by BeforeEach and delete operator NS")
 			NO.uninstallOperator(oc)
 			oc.DeleteSpecifiedNamespaceAsAdmin(netobservNS)
@@ -957,7 +957,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-High-62989-Verify SCTP, ICMP, ICMPv6 traffic is observed [Disruptive]", func() {
-			SkipIfOCPBelow(4, 10)
+			SkipIfOCPBelow("4.10")
 			var (
 				sctpClientPodTemplatePath = filePath.Join(networkingDir, "sctpclient.yaml")
 				sctpServerPodTemplatePath = filePath.Join(networkingDir, "sctpserver.yaml")
@@ -1065,7 +1065,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-High-68125-Verify DSCP with NetObserv [Serial]", func() {
-			SkipIfOCPBelow(4, 14)
+			SkipIfOCPBelow("4.14")
 			g.By("Deploying test server and client pods")
 			serverTemplate := filePath.Join(baseDir, "test-nginx-server_template.yaml")
 			testServerTemplate := TestServerTemplate{
@@ -1182,7 +1182,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-High-69218-High-71291-Verify cluster ID and zone in multiCluster deployment [Serial]", func() {
-			SkipIfOCPBelow(4, 11)
+			SkipIfOCPBelow("4.11")
 			g.By("Get clusterID of the cluster")
 			clusterID, err := oc.AsAdmin().WithoutNamespace().Run("get").Args("clusterversion", "-o=jsonpath={.items[].spec.clusterID}").Output()
 			o.Expect(err).NotTo(o.HaveOccurred())
@@ -1235,7 +1235,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-Longduration-High-73175-Verify eBPF agent filtering [Serial]", func() {
-			SkipIfOCPBelow(4, 14)
+			SkipIfOCPBelow("4.14")
 			g.By("Deploy test server and client pods")
 			serverTemplate := filePath.Join(baseDir, "test-nginx-server_template.yaml")
 			testServerTemplate := TestServerTemplate{
@@ -1388,7 +1388,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:memodi-Critical-53844-Sanity Test NetObserv [Serial]", func() {
-			SkipIfOCPBelow(4, 11)
+			SkipIfOCPBelow("4.11")
 			g.By("Deploy FlowCollector")
 			flow := Flowcollector{
 				Namespace:     namespace,
@@ -1414,7 +1414,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-High-67782-Verify large volume downloads [Serial]", func() {
-			SkipIfOCPBelow(4, 11)
+			SkipIfOCPBelow("4.11")
 			g.By("Deploy FlowCollector")
 			flow := Flowcollector{
 				Namespace:              namespace,
@@ -1472,7 +1472,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-High-75656-Verify TCP flags [Disruptive]", func() {
-			SkipIfOCPBelow(4, 13)
+			SkipIfOCPBelow("4.13")
 			SYNFloodMetricsPath := filePath.Join(baseDir, "SYN_flood_metrics_template.yaml")
 			SYNFloodAlertsPath := filePath.Join(baseDir, "SYN_flood_alert_template.yaml")
 
@@ -1573,7 +1573,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-Longduration-Medium-78480-NetObserv with sampling 50 [Serial][Slow]", func() {
-			SkipIfOCPBelow(4, 14)
+			SkipIfOCPBelow("4.14")
 			g.By("Deploy DNS pods")
 			DNSTemplate := filePath.Join(baseDir, "DNS-pods.yaml")
 			DNSNamespace := "dns-traffic"
@@ -1699,7 +1699,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-High-79015-Verify PacketTranslation feature [Serial]", func() {
-			SkipIfOCPBelow(4, 14)
+			SkipIfOCPBelow("4.14")
 			g.By("Deploy test server and client pods")
 			servertemplate := filePath.Join(baseDir, "test-nginx-server_template.yaml")
 			testServerTemplate := TestServerTemplate{
@@ -1758,7 +1758,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 
 		// NetworkEvents ebpf hook only supported for OCP >= 4.19
 		g.It("Author:memodi-NonPreRelease-Medium-77894-TechPreview Network Policies Correlation [Serial]", func() {
-			SkipIfOCPBelow(4, 19)
+			SkipIfOCPBelow("4.19")
 			if !compat_otp.IsTechPreviewNoUpgrade(oc) {
 				g.Skip("Skipping because the TechPreviewNoUpgrade is not enabled on the cluster.")
 			}
@@ -1890,7 +1890,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-High-80090-Verify FLP tail-based filtering [Serial]", func() {
-			SkipIfOCPBelow(4, 15)
+			SkipIfOCPBelow("4.15")
 			// Accept flows with Source Namespace = < namespace > and
 			// Source Name containing 'flowlogs-pipeline-' and
 			// NOT Source Port 9401 and
@@ -1944,7 +1944,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-High-81677-Validate UDN with NetObserv [Serial]", func() {
-			SkipIfOCPBelow(4, 18)
+			SkipIfOCPBelow("4.18")
 			var (
 				namespace           = oc.Namespace()
 				networkingUDNDir, _ = filePath.Abs("testdata/networking/udn")
@@ -2105,7 +2105,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-High-83022-Validate CUDN with Localnet [Serial]", func() {
-			SkipIfOCPBelow(4, 19)
+			SkipIfOCPBelow("4.19")
 			var (
 				namespace                = oc.Namespace()
 				opNamespace              = "openshift-nmstate"
@@ -2230,7 +2230,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-Longduration-Medium-81410-NetObserv with eBPF manager [Serial][Slow]", func() {
-			SkipIfOCPBelow(4, 18)
+			SkipIfOCPBelow("4.18")
 			g.By("Deploy eBPF manager operator")
 			// eBPF manager operator variables
 			bpfDir, _ := filePath.Abs("testdata/bpfman")
@@ -2309,7 +2309,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:memodi-NonPreRelease-High-82637-Verify IPSec feature [Disruptive]", func() {
-			SkipIfOCPBelow(4, 16)
+			SkipIfOCPBelow("4.16")
 			compat_otp.By("Check if IPSec is enabled in the cluster")
 			ipsecEnabled, err := oc.AsAdmin().WithoutNamespace().Run("get").Args("networks.operator.openshift.io", "cluster", "-ojsonpath='{.spec.defaultNetwork.ovnKubernetesConfig.ipsecConfig.mode}'").Output()
 			o.Expect(err).NotTo(o.HaveOccurred())
@@ -2349,7 +2349,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:kapjain-NonPreRelease-Longduration-High-85953-Verify FlowCollector Service deployment model [Serial][Slow]", func() {
-			SkipIfOCPBelow(4, 14)
+			SkipIfOCPBelow("4.14")
 			g.By("Deploy FlowCollector with Service deployment model")
 			flow := Flowcollector{
 				Namespace:       namespace,
@@ -2472,7 +2472,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:kapjain-Medium-86372-Verify Gateway API three-level owner metadata [Serial]", func() {
-			SkipIfOCPBelow(4, 19)
+			SkipIfOCPBelow("4.19")
 			startTime := time.Now()
 			g.By("Deploy flowcollector")
 			gatewayAPITemplate := filePath.Join(baseDir, "gateway-api-template.yaml")
@@ -2515,7 +2515,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 			o.Expect(len(flowRecords)).Should(o.BeNumerically(">", 0), "expected number of Gateway Owner flows > 0")
 		})
 		g.It("Author:kapjain-Medium-88334-Pause Network Observability functions [Serial]", func() {
-			SkipIfOCPBelow(4, 14)
+			SkipIfOCPBelow("4.14")
 			g.By("Create a FlowCollector")
 			flow := Flowcollector{
 				Namespace:       namespace,
@@ -2653,7 +2653,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:aramesha-NonPreRelease-High-88455-Verify TLS Tracking feature [Serial]", func() {
-			SkipIfOCPBelow(4, 14)
+			SkipIfOCPBelow("4.14")
 			g.By("Deploy TLS test server and client pods")
 			servertemplate := filePath.Join(baseDir, "test-tls-server_template.yaml")
 			testServerTemplate := TestServerTemplate{
@@ -2736,7 +2736,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		})
 
 		g.It("Author:kapjain-Medium-88683-Secure communications between Agent and FLP [Serial]", func() {
-			SkipIfOCPBelow(4, 14)
+			SkipIfOCPBelow("4.14")
 			var (
 				certManagerPackageName = "openshift-cert-manager-operator"
 				certManagerNS          = "cert-manager-operator"
@@ -2968,7 +2968,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 			})
 
 			g.It("Author:aramesha-NonPreRelease-Longduration-Critical-56362-High-53597-High-56326-High-64880-High-75340-Verify network flows are captured with Kafka with TLS [Serial][Slow]", func() {
-				SkipIfOCPBelow(4, 14)
+				SkipIfOCPBelow("4.14")
 
 				g.By("Deploy FlowCollector with Kafka TLS")
 				flow := Flowcollector{
@@ -3022,7 +3022,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 			})
 
 			g.It("Author:aramesha-NonPreRelease-Longduration-High-57397-High-65116-Verify network-flows export with Kafka and netobserv installation without Loki[Serial]", func() {
-				SkipIfOCPBelow(4, 10)
+				SkipIfOCPBelow("4.10")
 				g.By("Deploy kafka Topic for export")
 				// deploy kafka topic for export
 				kafkaTopic2 := KafkaTopic{
@@ -3206,7 +3206,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 			})
 
 			g.It("Author:aramesha-NonPreRelease-Longduration-High-76537-Verify flow enrichment for VM's secondary interfaces [Disruptive][Slow]", func() {
-				SkipIfOCPBelow(4, 13)
+				SkipIfOCPBelow("4.13")
 				var (
 					testNS = "test-76537"
 					// NAD vars
@@ -3322,7 +3322,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 			})
 
 			g.It("Author:aramesha-NonPreRelease-Longduration-Medium-85887-Verify UDN with VMs [Disruptive][Slow]", func() {
-				SkipIfOCPBelow(4, 18)
+				SkipIfOCPBelow("4.18")
 				var (
 					// UDN vars
 					udnNS   = "netobserv-udn-85887"
@@ -3435,7 +3435,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 			})
 
 			g.It("Author:aramesha-High-85935-Validate CUDN with Localnet and VM's[Serial]", func() {
-				SkipIfOCPBelow(4, 19)
+				SkipIfOCPBelow("4.19")
 				var (
 					// NMstate operator vars
 					opNamespace       = "openshift-nmstate"

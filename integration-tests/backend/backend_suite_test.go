@@ -31,7 +31,6 @@ var _ = g.BeforeSuite(func() {
 	var err error
 	clusterVersion, err = GetOCPVersion(oc)
 	gomega.Expect(err).NotTo(gomega.HaveOccurred())
-	g.GinkgoWriter.Printf("Running tests against OCP %s\n", clusterVersion.String())
 })
 
 func TestBackend(t *testing.T) {
@@ -71,6 +70,7 @@ var _ = g.ReportBeforeSuite(func(report g.Report) {
 	fmt.Printf("==========================================================================================================\n")
 	fmt.Printf("Random Seed: %d\n\n", report.SuiteConfig.RandomSeed)
 	fmt.Printf("Will run %d specs\n", report.PreRunStats.SpecsThatWillRun)
+	fmt.Printf("Running tests against OCP %s\n", clusterVersion)
 })
 
 var _ = g.ReportAfterEach(func(report g.SpecReport) {

@@ -2,60 +2,39 @@ package e2etests
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 
 	"github.com/onsi/ginkgo/v2"
 	exutil "github.com/openshift/origin/test/extended/util"
+	compat_otp "github.com/openshift/origin/test/extended/util/compat_otp"
+
+	"golang.org/x/mod/semver"
 )
 
-type OCPVersion struct {
-	Major int
-	Minor int
-}
+var clusterVersion string
 
-var clusterVersion *OCPVersion
-
-func GetOCPVersion(oc *exutil.CLI) (*OCPVersion, error) {
-
-	if clusterVersion != nil {
+func GetOCPVersion(oc *exutil.CLI) (string, error) {
+	if clusterVersion == "" {
 		return clusterVersion, nil
 	}
 
-	version, err := oc.AsAdmin().WithoutNamespace().Run("get").Args("clusterversion", "-o=jsonpath={.items[0].status.desired.version}").Output()
-	if err != nil {
-		return nil, err
-	}
-
-	parts := strings.Split(version, ".")
-	if len(parts) < 2 {
-		return nil, fmt.Errorf("invalid version: %s", version)
-	}
-
-	major, _ := strconv.Atoi(parts[0])
-	minor, _ := strconv.Atoi(parts[1])
-
-	clusterVersion = &OCPVersion{Major: major, Minor: minor}
-	return clusterVersion, nil
-}
-
-func (v *OCPVersion) AtLeast(major, minor int) bool {
-	if v.Major > major {
-		return true
-	}
-	return v.Major == major && v.Minor >= minor
-}
-
-func (v *OCPVersion) String() string {
-	return fmt.Sprintf("%d.%d", v.Major, v.Minor)
+	var err error
+	_, clusterVersion, err = compat_otp.GetClusterVersion(oc)
+	clusterVersion = semver.Canonical(clusterVersion)
+	return clusterVersion, err
 }
 
 // SkipIfOCPBelow skips test if cluster version is below requirement
-func SkipIfOCPBelow(major, minor int) {
-	if clusterVersion == nil {
+func SkipIfOCPBelow(requiredVersion string) {
+	if clusterVersion == "" {
 		ginkgo.Fail("Cluster version not initialized")
 	}
-	if !clusterVersion.AtLeast(major, minor) {
-		ginkgo.Skip(fmt.Sprintf("Requires OCP %d.%d+, cluster is %s", major, minor, clusterVersion))
+
+	requiredVersion = semver.Canonical(requiredVersion)
+	if !semver.IsValid(requiredVersion) {
+		ginkgo.Fail("Requested cluster version is invalid")
+	}
+
+	if semver.Compare(requiredVersion, clusterVersion) == -1 {
+		ginkgo.Skip(fmt.Sprintf("Requires OCP %s+, cluster is %s", requiredVersion, clusterVersion))
 	}
 }

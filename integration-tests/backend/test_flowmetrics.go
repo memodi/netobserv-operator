@@ -71,7 +71,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:memodi-High-73539-Create custom metrics and charts [Serial]", func() {
-		SkipIfOCPBelow(4, 12)
+		SkipIfOCPBelow("4.12")
 		namespace := oc.Namespace()
 		customMetrics := CustomMetrics{
 			Namespace: namespace,

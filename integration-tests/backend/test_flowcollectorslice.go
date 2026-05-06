@@ -201,7 +201,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:aramesha-Critical-86388-Verify flowCollectorSlice collectionMode: AlwaysCollect [Serial]", func() {
-		SkipIfOCPBelow(4, 14)
+		SkipIfOCPBelow("4.14")
 		// Test ping pods template variables
 		pingPodsTemplate := filePath.Join(baseDir, "test-ping-pods_template.yaml")
 		testPingPodsTemplate := TestPingPodsTemplate{
@@ -310,7 +310,8 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:aramesha-Critical-86388-Verify flowCollectorSlice collectionMode: AllowList [Serial]", func() {
-		SkipIfOCPBelow(4, 14)
+		SkipIfOCPBelow("4.14")
+
 		// Test ping pods template variables
 		pingPodsTemplate := filePath.Join(baseDir, "test-ping-pods_template.yaml")
 		testPingPodsTemplate := TestPingPodsTemplate{
@@ -417,7 +418,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:aramesha-NonPreRelease-Longduration-High-87145-Verify FlowCollectorSlices multi-tenancy [Disruptive][Slow]", func() {
-		SkipIfOCPBelow(4, 14)
+		SkipIfOCPBelow("4.14")
 		g.By("Creating test users")
 		users, usersHTpassFile, htPassSecret := getNewUser(oc, 1)
 		defer userCleanup(oc, users, usersHTpassFile, htPassSecret)
