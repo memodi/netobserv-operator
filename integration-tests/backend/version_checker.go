@@ -26,7 +26,7 @@ func GetOCPVersion(oc *exutil.CLI) (string, error) {
 }
 
 // SkipIfOCPBelow skips test if cluster version is below requirement
-// expoects "v4.19" format
+// expects "v4.19" format
 func SkipIfOCPBelow(requiredVersion string) {
 	if clusterVersion == "" {
 		ginkgo.Fail("Cluster version not initialized")
