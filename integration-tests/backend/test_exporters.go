@@ -79,7 +79,7 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 	})
 
 	g.It("Author:aramesha-High-64156-Verify IPFIX-exporter [Serial]", func() {
-		SkipIfOCPBelow("4.10")
+		SkipIfOCPBelow("v4.10")
 		clusterArch, err := oc.AsAdmin().WithoutNamespace().Run("get").Args("nodes", "-o=jsonpath={.items[0].status.nodeInfo.architecture}").Output()
 		o.Expect(err).NotTo(o.HaveOccurred())
 		if !strings.Contains(clusterArch, "amd64") {

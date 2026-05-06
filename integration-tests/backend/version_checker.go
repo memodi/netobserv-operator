@@ -20,11 +20,13 @@ func GetOCPVersion(oc *exutil.CLI) (string, error) {
 	var err error
 	_ , clusterVersion, err = compat_otp.GetClusterVersion(oc)
 	clusterVersion = semver.Canonical("v"+clusterVersion)
+	clusterVersion = semver.MajorMinor(clusterVersion)
 	fmt.Printf("Detected OCP version: %s\n", clusterVersion)
 	return clusterVersion, err
 }
 
 // SkipIfOCPBelow skips test if cluster version is below requirement
+// expoects "v4.19" format
 func SkipIfOCPBelow(requiredVersion string) {
 	if clusterVersion == "" {
 		ginkgo.Fail("Cluster version not initialized")
@@ -35,7 +37,7 @@ func SkipIfOCPBelow(requiredVersion string) {
 		ginkgo.Fail("Requested cluster version is invalid")
 	}
 
-	if semver.Compare(requiredVersion, clusterVersion) == -1 {
-		ginkgo.Skip(fmt.Sprintf("Requires OCP %s+, cluster is %s", requiredVersion, clusterVersion))
+	if semver.Compare(clusterVersion, requiredVersion) == -1{
+		ginkgo.Skip(fmt.Sprintf("Requires at least OCP %s+, cluster is %s", requiredVersion, clusterVersion))
 	}
 }
