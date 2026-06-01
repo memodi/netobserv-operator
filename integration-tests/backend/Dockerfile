@@ -11,16 +11,6 @@ COPY go.sum go.sum
 RUN go mod download
 RUN go install github.com/onsi/ginkgo/v2/ginkgo@latest
 
-# Pre-compile all dependencies (cached layer - rebuilds only when go.mod changes)
-# Uses a stub test file to trigger dependency compilation without real source
-RUN mkdir -p /tmp/depbuild && \
-    cp go.mod go.sum /tmp/depbuild/ && \
-    cd /tmp/depbuild && \
-    echo 'package e2etests' > stub.go && \
-    echo 'package e2etests_test' > stub_test.go && \
-    GOOS=linux GOARCH=$TARGETARCH go test -c -o /dev/null 2>/dev/null || true && \
-    rm -rf /tmp/depbuild
-
 # Copy the source code (changes frequently - separate layer)
 COPY *.go ./
 COPY testdata/ testdata/
