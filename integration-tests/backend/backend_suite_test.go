@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"testing"
 
 	g "github.com/onsi/ginkgo/v2"
+	"github.com/onsi/ginkgo/v2/reporters"
 	"github.com/onsi/ginkgo/v2/types"
 	"github.com/onsi/gomega"
 	exutil "github.com/openshift/origin/test/extended/util"
@@ -112,6 +114,35 @@ var _ = g.ReportAfterEach(func(report g.SpecReport) {
 			fmt.Printf("\n%s\n", report.Failure.Message)
 			fmt.Printf("%s\n", report.Failure.Location.String())
 		}
+	}
+})
+
+// writeFilteredJUnitReport generates a JUnit XML containing only sig-netobserv specs.
+// Output path: --junit-report flag value (overwrites ginkgo's full report) or JUNIT_REPORT_FILE env var.
+var _ = g.ReportAfterSuite("NetObserv JUnit", func(report g.Report) {
+	_, reporterConfig := g.GinkgoConfiguration()
+	junitFile := reporterConfig.JUnitReport
+	if junitFile == "" {
+		junitFile = os.Getenv("JUNIT_REPORT_FILE")
+	}
+	if junitFile == "" {
+		return
+	}
+	filtered := report
+	filtered.SpecReports = nil
+	for _, spec := range report.SpecReports {
+		// Keep suite setup/teardown nodes always
+		if spec.LeafNodeType != types.NodeTypeIt {
+			filtered.SpecReports = append(filtered.SpecReports, spec)
+			continue
+		}
+		// Keep only sig-netobserv It specs
+		if strings.Contains(spec.FullText(), "sig-netobserv") {
+			filtered.SpecReports = append(filtered.SpecReports, spec)
+		}
+	}
+	if err := reporters.GenerateJUnitReport(filtered, junitFile); err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to write filtered JUnit report to %s: %v\n", junitFile, err)
 	}
 })
 
