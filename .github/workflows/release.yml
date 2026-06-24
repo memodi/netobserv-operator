@@ -30,15 +30,15 @@ jobs:
           registry: quay.io
       - name: validate tag
         run: |
-          # tag=`git describe --exact-match --tags 2> /dev/null`
-          # if [[ $tag =~ ^[0-9]+\.[0-9]+\.[0-9]+(-crc[0-9]+|-community)$ ]]; then
-          #     echo "$tag is a valid release tag"
-          #     set -e
-          #     echo "tag=$tag" >> $GITHUB_ENV
-          # else
-          #     echo "$tag is NOT a valid release tag"
-          #     exit 1
-          # fi
+          tag="${GITHUB_REF_NAME}"
+          if [[ $tag =~ ^[0-9]+\.[0-9]+\.[0-9]+(-crc[0-9]+|-community|-test.*)? ]]; then
+              echo "$tag is a valid release tag"
+              set -e
+              echo "tag=$tag" >> $GITHUB_ENV
+          else
+              echo "$tag is NOT a valid release tag"
+              exit 1
+          fi
       - name: install make
         run: sudo apt-get install make
       - name: build operator
