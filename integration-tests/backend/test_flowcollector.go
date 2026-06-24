@@ -51,8 +51,8 @@ var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
 		catSrcTemplate = filePath.Join(subscriptionDir, "catalog-source.yaml")
 		catalogSource  = os.Getenv("MULTISTAGE_PARAM_OVERRIDE_NETOBSERV_CS_IMAGE")
 
-		kubeadminToken string
-		namespace      string
+		// kubeadminToken string
+		// namespace      string
 	)
 
 	g.BeforeEach(func() {
