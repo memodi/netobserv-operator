@@ -7,10 +7,10 @@ permissions:
   contents: write
 
 env:
-  WF_REGISTRY_USER: rhn_support_memodi
-  WF_REGISTRY: quay.io/rhn_support_memodi
+  WF_REGISTRY_USER: netobserv+github_ci
+  WF_REGISTRY: quay.io/netobserv
   WF_IMAGE: network-observability-operator
-  WF_ORG: rhn_support_memodi
+  WF_ORG: netobserv
   WF_MULTIARCH_TARGETS: amd64 arm64 ppc64le s390x
 
 jobs:
@@ -30,8 +30,8 @@ jobs:
           registry: quay.io
       - name: validate tag
         run: |
-          tag="${GITHUB_REF_NAME}"
-          if [[ $tag =~ ^[0-9]+\.[0-9]+\.[0-9]+(-crc[0-9]+|-community|-test.*)? ]]; then
+          tag=`git describe --exact-match --tags 2> /dev/null`
+          if [[ $tag =~ ^[0-9]+\.[0-9]+\.[0-9]+(-crc[0-9]+|-community)$ ]]; then
               echo "$tag is a valid release tag"
               set -e
               echo "tag=$tag" >> $GITHUB_ENV
