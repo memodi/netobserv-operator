@@ -20,6 +20,7 @@ import (
 )
 
 var _ = g.Describe("[sig-netobserv] Network_Observability", func() {
+	// Test change to verify integration-tests auto-labeling workflow
 
 	defer g.GinkgoRecover()
 	var (
